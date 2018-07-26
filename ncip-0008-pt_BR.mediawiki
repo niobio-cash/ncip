@@ -1,0 +1,120 @@
+<pre>
+  Niobio Cash Improvement proposal
+  NCIP: 8
+  Title: URI Scheme
+  Author: Helder Garcia <helder.garcia@gmail.com>, Jayder Franca
+  Status: Draft
+  Type: Standards
+  Created: 2018-07-19
+  License: PD
+</pre>
+
+==Resumo==
+
+Esse NCIP propõe uma padronização de URI para pagamentos com Niobio Cash. É baseado em [https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki BIP0021].
+
+==Motivação==
+
+O propósito desta padronização de URI é simplificar para os usuários a realização de pagamentos com um simples clique em links, páginas da web ou escaneando QR Codes.
+
+==Especificação==
+
+=== Regras Gerais ===
+
+Clientes Niobio Cash NÃO DEVEM agir nas URIs sem obter a autorização do usuário.
+Eles DEVEM requerir ao usuário a aprovação individual e manual de cada pagamento, ainda que, em alguns casos eles POSSAM permitir ao usuário a decisão de automatização dos pagamentos.
+
+=== Integração de funcionamento do Sistema ===
+
+Clientes gráficos Niobio cash DEVEM se registrar como "manipuladores" para "niobiocash:" esquema URI por padrão, se nenhum outro "manipulador" já estiver registrado. Se já houver algum "manipulador" registrado, eles PODEM solicitar que o usuário realize a alteração na primeira execução do cliente.
+
+=== Formato Geral ===
+
+URIs Niobio Cash seguem o formato geral para URIs, definidos em RFC 3986. O componente padrão consiste no endereço da carteira Niobio Cash, e o componente de consulta fornece opções adicionais de pagamentos.
+Elementos do componente consulta podem conter caracteres fora do intervalo válido. Estes, devem ser codificados de acordo com o UTF-8 e, em seguida, cada octeto da sequência UTF-8 correspondente deve ser percentualmente codificado, conforme descrito no RFC 3986.
+
+=== Gramática ABNF ===
+
+(Veja também [[#Sintaxe_Simples|uma representação simples de sintaxe]])
+
+ niobiocashurn     = "niobiocash:" niobiocashaddress [ "?" niobiocashparams ]
+ niobiocashaddress = *base58
+ niobiocashparams  = niobiocashparam [ "&" niobiocashparams ]
+ niobiocashparam   = [ amountparam / labelparam / descparam / reqparam ]
+ amountparam    = "amount=" *digit
+ payidparam     = "payid=" *qchar
+ labelparam     = "label=" *qchar
+ anonparam    = "anon=" *digit
+ descparam   = "message=" *qchar
+ reqparam       = "req-" qchar *qchar [ "=" *qchar ]
+
+Aqui, "qchar" corresponde a caracteres válidos em RFC 3986 URI componente de consulta, excluindo o "=" e "&" caracteres, que este NCIP toma como separadores
+
+A padronização do esquema ("niobiocash:") não faz distinção entre maiúsculas e minúsculas e as implementações devem aceitar qualquer combinação das mesmas. O restante da URI faz a distinção entre maiúsuclas e minúsculas, incluindo as chaves de consulta do parâmetro.
+
+=== Chaves de Consulta ===
+
+*address: Endereço da carteira Niobio Cash 
+*amount: Quantidade de Niobio Cash 
+*label: Identificador do endereço (por exemplo, o nome do destinatário)
+*payid: ID de pagamento no formato hexadecimal
+*anon: Nível de Anonimatio
+*desc: Mensagem de descrição do pagamento ([[#Exemplos|veja os exemplos abaixo]])
+
+====Valor da Transferência====
+
+Se um valor é fornecido, ele DEVE ser especificado em NBR 
+Todos os valores NÂO DEVEM conter vírgulas ou pontos. Os clientes devem considerar as oito casas decimais. 
+Ou seja, 100000000 é considerado como 1 NBR, 10000000 é 0.1 NBR e 1.00000000 é um valor inválido.
+
+Clientes Niobio Cash PODEM exibir os valor em qualquer formato que não tenha como objetivo enganar o usuário.
+Eles DEVEM escolher um formato que seja o menos confuso possível, e somente após isso o mais razoável, dado o valor solicidado
+Por exemplo, desde que a maioria dos usuários trabalhe com unidades de NBR, os valores sempre devem ser exibidos em NBR como padrão, mesmo que mNBR seja uma interpretação mais lógica do valor
+
+== Fundamentaçãpo ==
+
+===Identificadores de Pagamento===
+
+As melhores práticas atuais são a utilização de um endereço exclusivo usado para cada transação.
+Portanto, a padronização URI não deve representar uma troca de informações pessoais, mas um pagamento único.
+
+===Acessibilidade (nome URI padrão)===
+
+Caso alguém de fora chegue a ver tal URI, o nome da URI padrão já fornece uma boa descrição.
+Uma busca rápida deve então fazer o resto para ajudá-los a encontrar os recursos necessários para efetuar o pagamento.
+Outros nomes propostos soam muito mais enigmáticos; a chance de que alguém pesquise por curiosidade é muito pequena.
+Além disso, muito provavelmente, o que ele encontrará são principalmente especificações técnicas - não a melhor introdução a Niobio Cash.
+
+== Compatibilidade de encaminhamento ==
+
+Variáveis com o prefixo req- são consideradas obrigatórias. Se o cliente não implementar nenhuma variável como req-, DEVE-SE considerar toda a URI inválida. Qualquer outras variáveis não implementadas que não sejam prefixadas com req- podem ser ignoradas seguramente.
+
+== Apêndice ==
+
+===Sintaxe Simples===
+Essa seção não é normativa e não cobre toda a sintaxe possível.
+Por favor veja [[#gramática-abnf|Gramática ABNF]] acima para a sintaxe normativa.
+
+[foo] opcional, &lt;bar&gt; são espaços reservados
+
+ <nowiki>niobiocash:<address>[?amount=<amount>][&label=<label>][&payid=<payid][&anon=<anon>][&desc=<description>]</nowiki>
+
+===Exemplos===
+
+Apenas o endereço:
+ niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi
+
+Endereço e o nome:
+ niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi?label=Jayder-Franca
+
+Solicitar 10.5 NBR para "Jayder-Franca":
+ niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi?amount=1050000000&label=Jayder-Franca
+
+Solicitar 200 NBR com mensagem:
+ niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi?amount=20000000000&label=Jayder-Franca&desc=Donation%20for%20project%20xyz
+
+Os caracteres devem ser codificados corretamente pela URI
+
+==Copyright==
+
+Esse documento está disponibilizado em domínio público.

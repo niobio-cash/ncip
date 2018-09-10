@@ -40,12 +40,13 @@ Elementos do componente consulta podem conter caracteres fora do intervalo váli
  niobiocashurn     = "niobiocash:" niobiocashaddress [ "?" niobiocashparams ]
  niobiocashaddress = *base58
  niobiocashparams  = niobiocashparam [ "&" niobiocashparams ]
- niobiocashparam   = [ amountparam / labelparam / descparam / reqparam ]
+ niobiocashparam   = [ amountparam / paymentidparam/ labelparam / anonparam / descparam / priorityparam ]
  amountparam    = "amount=" *digit
  paymentidparam     = "payment_id=" *qchar
  labelparam     = "label=" *qchar
  anonparam    = "anon=" *digit
- descparam   = "message=" *qchar
+ descparam   = "desc=" *qchar
+ priorityparam = "priority=" ("low" / "medium" / "high")
 
 Aqui, "qchar" corresponde a caracteres válidos em RFC 3986 URI componente de consulta, excluindo o "=" e "&" caracteres, que este NCIP toma como separadores.
 
@@ -59,6 +60,7 @@ A padronização do esquema ("niobiocash:") não faz distinção entre maiúscul
 *payment_id: ID de pagamento no formato hexadecimal
 *anon: Nível de Anonimato
 *desc: Mensagem de descrição do pagamento ([[#Exemplos|veja os exemplos abaixo]])
+*priority: Prioridade da transação. Pode ser "low", "medium" ou "high", com taxas de rede progressivamente mais altas. Os valores absolutos das taxas ficam a critério da implementação de cada cliente.
 
 ====Valor da Transferência====
 
@@ -101,7 +103,7 @@ Endereço e o nome:
  niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi?label=Jayder-Franca
 
 Solicitar 10.5 NBR para "Jayder-Franca":
- niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi?amount=1050000000&label=Jayder-Franca
+ niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi?amount=1050000000&label=Jayder-Franca&priority=high
 
 Solicitar 200 NBR com descrição:
  niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi?amount=20000000000&label=Jayder-Franca&desc=Donation%20for%20project%20xyz

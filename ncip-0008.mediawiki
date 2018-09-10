@@ -40,12 +40,13 @@ Elements of the query component may contain characters outside the valid range. 
  niobiocashurn     = "niobiocash:" niobiocashaddress [ "?" niobiocashparams ]
  niobiocashaddress = *base58
  niobiocashparams  = niobiocashparam [ "&" niobiocashparams ]
- niobiocashparam   = [ amountparam / labelparam / descparam / reqparam ]
+ niobiocashparam   = [ amountparam / paymentidparam/ labelparam / anonparam / descparam / priorityparam ]
  amountparam    = "amount=" *digit
  paymentidparam     = "payment_id=" *qchar
  labelparam     = "label=" *qchar
  anonparam    = "anon=" *digit
- descparam   = "message=" *qchar
+ descparam   = "desc=" *qchar
+ priorityparam = "priority=" ("low" / "medium" / "high")
 
 Here, "qchar" corresponds to valid characters of an RFC 3986 URI query component, excluding the "=" and "&" characters, which this NCIP takes as separators.
 
@@ -59,6 +60,7 @@ The scheme component ("niobiocash:") is case-insensitive, and implementations mu
 *payment_id: Payment ID in hexadecimal format
 *anon: Anonymity level
 *desc: Message that describes the transaction to the user ([[#Examples|see examples below]])
+*priority: Priority of the transaction. It can be used values "low", "medium" or "high", with progressively higher fees. Actual values of the fees is a choice of client implementation.
 
 ====Transfer Amount====
 
@@ -102,7 +104,7 @@ Address with name:
  niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi?label=Jayder-Franca
 
 Request 10.5 NBR to "Jayder-Franca":
- niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi?amount=1050000000&label=Jayder-Franca
+ niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi?amount=1050000000&label=Jayder-Franca&priority=high
 
 Request 200 NBR with description:
  niobiocash:N76KUSqbeYPajqYvbv2XeNGpxCtw2zvPjPfDh2aWa24yiCF5mQ68vfF5oCUdW1GiExNMJmGHtLf6qNGGjhPwDe2H5yShrVi?amount=20000000000&label=Jayder-Franca&desc=Donation%20for%20project%20xyz

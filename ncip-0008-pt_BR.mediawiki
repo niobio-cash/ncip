@@ -65,7 +65,7 @@ A padronização do esquema ("niobiocash:") não faz distinção entre maiúscul
 ====Valor da Transferência====
 
 Se um valor é fornecido, ele DEVE ser especificado em NBR.
-Todos os valores NÂO DEVEM conter vírgulas ou pontos. Os clientes devem considerar as oito casas decimais.
+Os valores NÂO DEVEM conter vírgulas ou pontos. Os clientes devem considerar as oito casas decimais.
 Ou seja, 100000000 é considerado como 1 NBR, 10000000 é 0.1 NBR e 1.00000000 é um valor inválido.
 
 Clientes Niobio Cash PODEM exibir os valores em qualquer formato que não tenha como objetivo enganar o usuário.

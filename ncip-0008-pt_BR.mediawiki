@@ -50,7 +50,7 @@ Elementos do componente consulta podem conter caracteres fora do intervalo váli
 
 Aqui, "qchar" corresponde a caracteres válidos em RFC 3986 URI componente de consulta, excluindo o "=" e "&" caracteres, que este NCIP toma como separadores.
 
-A padronização do esquema ("niobiocash:") não faz distinção entre maiúsculas e minúsculas e as implementações devem aceitar qualquer combinação das mesmas. O restante da URI faz a distinção entre maiúsculas e minúsculas, incluindo as chaves de consulta do parâmetro.
+A padronização do esquema ("niobiocash:") não faz distinção entre maiúsculas e minúsculas e as implementações devem aceitar qualquer combinação das mesmas.
 
 === Chaves de Consulta ===
 

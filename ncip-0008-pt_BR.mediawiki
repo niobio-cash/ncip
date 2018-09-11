@@ -79,10 +79,9 @@ Por exemplo, dado que a maioria dos usuários trabalha com unidades NBR, os valo
 A melhor prática é a utilização de um endereço único para cada transação.
 Portanto, a padronização URI não deve representar uma troca de informações pessoais, mas apenas um pagamento.
 
-===Acessibilidade===
+===Completude===
 
-Caso alguém de fora veja a URI, o nome da URI padrão já fornece uma boa descrição.
-Uma busca rápida deve então fazer o resto para ajudá-lo a encontrar os recursos necessários para efetuar o pagamento.
+A URI deve prover o máximo possível de dados para tornar o pagamento simples e direto para o usuário. Se todos os parâmetros forem preenchidos o pagamento exigirá apenas o click de um botão ENVIAR.
 
 == Apêndice ==
 

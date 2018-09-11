@@ -79,10 +79,9 @@ For example, so long as the majority of users work in NBR units, values should a
 Current best practices are that a unique address should be used for every transaction.
 Therefore, a URI scheme should not represent an exchange of personal information, but a one-time payment.
 
-===Accessibility===
+===Completeness===
 
-Should someone from the outside happen to see such a URI, the URI scheme name already gives a description.
-A quick search should then do the rest to help him finding the resources needed to make his payment.
+The URI must provide as much data as possible to make the payment straightforward and simple for the sender. If all parameters are fulfilled the sender's action will be simply to click a SEND button.
 
 == Appendix ==
 
